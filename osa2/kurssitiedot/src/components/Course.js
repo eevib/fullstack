@@ -6,20 +6,21 @@ const Header = ({ course }) => {
   )
 }
 
-// const Total = ({ course }) => {
-//   let sum = 0
-//   sum = course.parts.map(part => part.exercises.sum)
-//   console.log(sum)
-//   return(
-//     <p>Number of exercises {sum}</p>
-//   ) 
-// }
+const Total = ({ course }) => {
+  let sum = course.parts.reduce(
+    ( ac, parts ) => ac + parts.exercises,
+    0
+  )
+  return(
+    <p><b>Total of exercises {sum}</b></p>
+  ) 
+}
 
 const Part = ({ part }) => {
   console.log()
   return (
     <p>
-      {part.name} {part.exercises}
+       {part.name} {part.exercises}
     </p>    
   )
 }
@@ -38,7 +39,7 @@ const Course = ({ course }) => {
     <div>
       <Header course={course} />
       <Content course={course} />
-      {/* <Total course={course} /> */}
+      <Total course={course} />
     </div>
   )
 }
