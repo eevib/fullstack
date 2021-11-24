@@ -1,12 +1,11 @@
-import React from 'react'
+import React from "react"
 
-const Person = ({ persons , pfilter}) => {
-  return (
-      persons
-      .filter(person => person.name.toLowerCase().includes(pfilter.toLowerCase()))
-      .map(person => <li key={person.name}> {person.name} {person.number} </li>)
-    
-  )
-}
+
+const Person = ({id, name, number, deletePerson}) => { 
+    return (
+        <li key={id}>
+        {name} {number} <button onClick={deletePerson}>{'delete'}</button>
+        </li>
+     )}
 
 export default Person
