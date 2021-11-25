@@ -3,6 +3,8 @@ import Persons from './components/Persons'
 import PersonFilter from './components/PersonFilter'
 import PersonForm from './components/PersonForm'
 import personService from './services/persons'
+import Message from './components/Message'
+import ErrorMessage from './components/ErrorMessage'
 
 
 const App = () => {
@@ -10,6 +12,8 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ showAll, setShowAll ] = useState('')
+  const [ message, setMessage ] = useState(null)
+  const [ errorMessage, setErrorMessage ] = useState(null)
 
   
   useEffect(() => {
@@ -32,39 +36,48 @@ const App = () => {
         .create(nameObject)
         .then(response => {
           setPersons(persons.concat(response.data))
+          setMessage(`Added '${newName}'`)
         })
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
     } else if (pers.number === newNumber) {
-      alert(`${newName} is already added to phonebook`)
+      alert(`'${newName}' is already added to phonebook`)
     } else if(pers.name === newName) {
-      if(window.confirm(`${newName} is already added to phonebook, do you want to replace the old numer with a new one?`)) {
+      if(window.confirm(`'${newName}' is already added to phonebook, do you want to replace the old numer with a new one?`)) {
         personService
           .update(pers.id, nameObject)
           .then(response => {
-            console.log(response, 'updated')
+            setMessage(`Updated the number of '${newName}'`)
+            setTimeout(() => {
+              setMessage(null)
+            }, 5000)
           })
-        personService
-          .getAll()  
-          .then(response => {
-            setPersons(response.data)
+          .catch(error => {
+            setErrorMessage(`Person '${newName}' was already removed from server`)
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000)
+            setPersons(persons.filter(p => p.id !== pers.id))
           })
       } 
     }
       setNewNumber('')
       setNewName('')  
   }
-     
 
   const handleDeletePerson = (person) => {
     console.log(`id: ${person.id} `)
-    if(window.confirm(`Are you sure you want to delete ${person.name}? `)) {
+    if(window.confirm(`Are you sure you want to delete '${person.name}'? `)) {
       personService
         .deletePerson(person.id)
-      personService
-        .getAll()
-        .then(response => {
-          setPersons(response.data)
+        .then(() => {
+          setPersons(persons.filter(p=> p.id !== person.id))
+          setMessage(`Deleted '${person.name}'`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
         })
-        
     }
   }
     
@@ -87,6 +100,8 @@ const App = () => {
      <div><PersonFilter filter={showAll} onChange={handleShowAll} />
      </div>
          <h2>Add a new</h2>
+      <Message message={message} />
+      <ErrorMessage errorMessage={errorMessage} />
       <PersonForm addName={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
       <div>
