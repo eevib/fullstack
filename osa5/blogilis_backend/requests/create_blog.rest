@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVldmkiLCJpZCI6IjYxYjg1MDk4YTY4YTgzMGJhYzFhMDQ4OSIsImlhdCI6MTYzOTU1MzIzMCwiZXhwIjoxNjM5NTU2ODMwfQ.zxbo8ws56nV7jZCUWIKRME86zoi2gMwVOnKhvLzKsk0
+
+{
+    "title": "New Blog",
+    "author": "unknown writer",
+    "url": "https://reactpatterns.com/newblog",
+    "user": "61b85098a68a830bac1a0489"
+}

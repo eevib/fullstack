@@ -1,0 +1,10 @@
+PUT http://localhost:3003/api/blogs/61b1bd55f2f0da33ba0a72b2
+Content-Type: application/json
+
+{
+  "title": "New Blog",
+  "author": "unknown writer",
+  "url": "https://reactpatterns.com/newblog",
+  "likes": 11
+
+}
