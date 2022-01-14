@@ -1,3 +1,3 @@
 # Helsinki University Fullstack open course
 
-At the moment I am doing the 2020 course edition, however I will continue with the 2021 version later when it starts.
+The first parts 2020 edition and part 2-7 from the 2021 edition. 
